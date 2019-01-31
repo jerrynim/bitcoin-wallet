@@ -4,7 +4,8 @@
   "description": "Electron, React",
   "main": "main.js",
   "dependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.0",
+    "get-port": "^4.1.0"
   },
   "devDependencies": {
     "electron": "^4.0.3"

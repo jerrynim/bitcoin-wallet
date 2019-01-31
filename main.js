@@ -1,6 +1,14 @@
 const electron = require("electron"),
   path = require("path"),
-  url = require("url");
+  url = require("url"),
+  getPort = require("get-port"),
+  bitcoin = require("./bitcoin/src/server");
+
+getPort().then((port) => {
+  const server = bitcoin.app.listen(port, () => {
+    console.log(`Running blockchain node on: http://localhost:${port}`);
+  });
+});
 
 const { app, BrowserWindow } = electron;
 
