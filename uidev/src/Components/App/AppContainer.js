@@ -4,7 +4,8 @@ import reset from "styled-reset";
 import axios from "axios";
 import typography from "../../typography";
 import AppPresenter from "./AppPresenter";
-
+import PropTypes from "prop-types";
+import { MASTER_NODE, SELF_NODE } from "../../constants";
 const baseStyles = () => createGlobalStyle`
   ${reset};
   ${typography};
@@ -17,10 +18,32 @@ class AppContainer extends Component {
   state = {
     isLoading: true
   };
+  static propTypes = {
+    sharedPort: PropTypes.number.isRequired
+  };
+  componentDidMount = () => {
+    const { sharedPort } = this.props;
+    this._registerOnMaster(sharedPort);
+    this._getAddress(sharedPort);
+  };
+
   render() {
     baseStyles();
     return <AppPresenter {...this.state} />;
   }
+
+  _registerOnMaster = async (port) => {
+    const request = await axios.post(`${MASTER_NODE}/peers`, {
+      peer: SELF_NODE(port)
+    });
+  };
+
+  _getAddress = async (port) => {
+    const request = await axios.get(`${SELF_NODE(port)}/me/address`);
+    this.setState({
+      address: request.data
+    });
+  };
 }
 
 export default AppContainer;
