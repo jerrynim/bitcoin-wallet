@@ -8,6 +8,8 @@ getPort().then((port) => {
   const server = bitcoin.app.listen(port, () => {
     console.log(`Running blockchain node on: http://localhost:${port}`);
   });
+  bitcoin.startP2PServer(server);
+  global.sharedPort = port;
 });
 
 const { app, BrowserWindow } = electron;
