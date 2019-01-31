@@ -46,7 +46,7 @@ class AppContainer extends Component {
     });
   };
   _getBalance = async (port) => {
-    const request = await axios.get(`${SELF_NODE(port)}/me/balance}`);
+    const request = await axios.get(`${SELF_NODE(port)}/me/balance`);
     this.setState({
       balance: request.data
     });
