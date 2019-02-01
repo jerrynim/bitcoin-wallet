@@ -8,11 +8,15 @@
     "get-port": "^4.1.0"
   },
   "devDependencies": {
-    "electron": "^4.0.3"
+    "electron": "^4.0.3",
+    "electron-packager": "^13.0.1"
   },
   "scripts": {
     "start": "concurrently --kill-others \" npm run startReact \" \"ENV=dev electron .\"",
-    "startReact": "cd uidev && npm start"
+    "startReact": "cd uidev && npm start",
+    "build": "electron-packager . --prune=false   --ignore=/uidev --overwrite --out=dist",
+    "prebuild": "npm run deleteWallet && cd uidev && npm run build",
+    "deleteWallet": "rm -rf bitcoin/src/privateKey"
   },
   "repository": {
     "type": "git",
