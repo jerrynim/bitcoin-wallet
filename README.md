@@ -1,2 +1,5 @@
 # bitcoin-wallet
-Electron, React 
+
+Electron, React.js, styled-components, axios, typography, react-toast
+
+Test :https://www.youtube.com/watch?v=SAbfVPtpUME
