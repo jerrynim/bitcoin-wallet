@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import axios from "axios";
@@ -6,6 +6,9 @@ import typography from "../../typography";
 import AppPresenter from "./AppPresenter";
 import PropTypes from "prop-types";
 import { MASTER_NODE, SELF_NODE, SELF_P2P_NODE } from "../../constants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
 const baseStyles = () => createGlobalStyle`
   ${reset};
   ${typography};
@@ -34,12 +37,15 @@ class AppContainer extends Component {
   render() {
     baseStyles();
     return (
-      <AppPresenter
-        {...this.state}
-        mineBlock={this._mineBlock}
-        handleInput={this._handleInput}
-        handleSubmit={this._handleSubmit}
-      />
+      <Fragment>
+        <AppPresenter
+          {...this.state}
+          mineBlock={this._mineBlock}
+          handleInput={this._handleInput}
+          handleSubmit={this._handleSubmit}
+        />
+        <ToastContainer draggable={true} position={"top-right"} />
+      </Fragment>
     );
   }
   _registerOnMaster = async (port) => {
@@ -70,6 +76,7 @@ class AppContainer extends Component {
     this.setState({
       isMining: false
     });
+    toast.success("Mining successed");
   };
   _handleInput = (e) => {
     const {
@@ -87,6 +94,7 @@ class AppContainer extends Component {
       amount: Number(amount),
       address: toAddress
     });
+    toast.success(`Send To ${toAddress} && amount ${amount}`);
     this.setState({
       amount: "",
       toAddress: ""
